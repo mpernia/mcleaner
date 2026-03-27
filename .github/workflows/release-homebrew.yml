@@ -35,8 +35,10 @@ jobs:
           git remote set-url origin https://${GH_TOKEN}@github.com/mpernia/homebrew-mcleaner.git
           
           # Update the formula with new version and sha256
-          sed -i "s/REPLACE_VERSION/$VERSION/g" Formula/mcleaner.rb
-          sed -i "s/REPLACE_WITH_ACTUAL_SHA256/${{ steps.sha.outputs.sha256 }}/" Formula/mcleaner.rb
+          # URL needs full tag (v0.1.0), version needs without "v" (0.1.0)
+          sed -i "s|REPLACE_VERSION_TAG|$TAG_NAME|g" Formula/mcleaner.rb
+          sed -i "s|REPLACE_VERSION|$VERSION|g" Formula/mcleaner.rb
+          sed -i "s|REPLACE_WITH_ACTUAL_SHA256|${{ steps.sha.outputs.sha256 }}|g" Formula/mcleaner.rb
           
           # Commit and push changes
           git config user.name "github-actions[bot]"
