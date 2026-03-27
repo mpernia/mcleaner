@@ -1,0 +1,25 @@
+name: PR Validation
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  build-macos:
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: |
+          clang++ --version
+          make --version
+
+      - name: Build
+        run: make
+
+      - name: Verify binary exists
+        run: test -x ./mcleaner

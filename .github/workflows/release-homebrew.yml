@@ -1,0 +1,43 @@
+name: Release to Homebrew
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update-homebrew:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download release tarball
+        run: |
+          curl -L -o mcleaner.tar.gz "${{ github.event.release.tarball_url }}"
+
+      - name: Calculate SHA256
+        id: sha
+        run: |
+          echo "sha256=$(sha256sum mcleaner.tar.gz | cut -d ' ' -f 1)" >> $GITHUB_OUTPUT
+
+      - name: Update Homebrew tap
+        env:
+          GH_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+          TAG_NAME: ${{ github.event.release.tag_name }}
+        run: |
+          # Extract version without "v" prefix (e.g., v0.1.0 -> 0.1.0)
+          VERSION="${TAG_NAME#v}"
+          
+          # Clone the Homebrew tap repository
+          gh repo clone mpernia/homebrew-mcleaner homebrew-mcleaner || \
+          git clone https://github.com/mpernia/homebrew-mcleaner.git homebrew-mcleaner
+          
+          cd homebrew-mcleaner
+          
+          # Update the formula with new version and sha256
+          sed -i "s/REPLACE_VERSION/$VERSION/g" Formula/mcleaner.rb
+          sed -i "s/REPLACE_WITH_ACTUAL_SHA256/${{ steps.sha.outputs.sha256 }}/" Formula/mcleaner.rb
+          
+          # Commit and push changes
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Formula/mcleaner.rb
+          git commit -m "Update mcleaner to $VERSION"
+          git push
