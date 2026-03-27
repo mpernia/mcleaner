@@ -1,3 +1,7 @@
+## Branch naming convention
+- Feature: `feature/XX-description`
+- Bugfix: `bugfix/XX-description`
+
 ## What changed
 - 
 
