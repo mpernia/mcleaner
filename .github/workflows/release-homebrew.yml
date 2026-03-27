@@ -27,9 +27,12 @@ jobs:
           
           # Clone the Homebrew tap repository
           gh repo clone mpernia/homebrew-mcleaner homebrew-mcleaner || \
-          git clone https://github.com/mpernia/homebrew-mcleaner.git homebrew-mcleaner
+          git clone https://${GH_TOKEN}@github.com/mpernia/homebrew-mcleaner.git homebrew-mcleaner
           
           cd homebrew-mcleaner
+          
+          # Configure git remote with token for push
+          git remote set-url origin https://${GH_TOKEN}@github.com/mpernia/homebrew-mcleaner.git
           
           # Update the formula with new version and sha256
           sed -i "s/REPLACE_VERSION/$VERSION/g" Formula/mcleaner.rb
