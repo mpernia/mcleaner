@@ -28,6 +28,26 @@ make
 ./mcleaner
 ```
 
+## Screenshots
+
+**Main Window** - Initial view with cleanable directories and risk classification
+![Main Window](docs/images/main.png)
+
+**Preview** - Preview table showing files to be deleted
+![Preview](docs/images/preview.png)
+
+**Help** - Keyboard shortcuts reference
+![Help](docs/images/help.png)
+
+**Dry-run Mode** - Simulation without actual deletion
+![Dry-run](docs/images/dry-run.png)
+
+**Warning Dialog** - Warning before destructive operations
+![Warning](docs/images/warning.png)
+
+**Error Dialog** - Error notification for failed operations
+![Error](docs/images/error.png)
+
 ### Dry-run mode
 ```bash
 ./mcleaner --dry-run
