@@ -2,6 +2,18 @@
 
 Terminal-based cleaner for macOS with a commander-like interface, risk-aware targeting, and safe defaults.
 
+## Installation
+
+### Homebrew
+```bash
+brew install mpernia/mcleaner/mcleaner
+```
+
+### Build from source
+```bash
+make
+```
+
 ## Features
 - Single-panel ncurses UI with keyboard-first navigation.
 - Column-based tables for targets, preview, and results.
