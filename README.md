@@ -36,9 +36,34 @@ make
 ```
 
 ## Run
+
+### Installed with Homebrew
 ```bash
+mcleaner
+```
+
+### Built locally (from source, without installing)
+```bash
+make
 ./mcleaner
 ```
+
+### Built and installed with `make install`
+```bash
+make
+sudo make install
+mcleaner
+```
+
+> Notes:
+> - Use `./mcleaner` only when running the binary directly from the project directory.
+> - Use `mcleaner` when it has been installed into your system (`/usr/local/bin` by default).
+> - `make install` may require administrator privileges because it writes to system directories. If you prefer a local installation, you can override the prefix:
+>   ```bash
+>   make install PREFIX=$HOME/.local
+>   ```
+>   and ensure `$HOME/.local/bin` is in your `PATH`.
+
 
 ## Screenshots
 
